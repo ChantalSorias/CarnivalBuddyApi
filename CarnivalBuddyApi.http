@@ -1,0 +1,6 @@
+@CarnivalBuddyApi_HostAddress = http://localhost:5068
+
+GET {{CarnivalBuddyApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
