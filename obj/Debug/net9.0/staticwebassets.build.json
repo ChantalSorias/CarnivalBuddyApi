@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "igbBwA20G5nwhDN6RDa0Ybj+AXK9oATGaJZlgmhYQMU=",
+  "Source": "CarnivalBuddyApi",
+  "BasePath": "_content/CarnivalBuddyApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
