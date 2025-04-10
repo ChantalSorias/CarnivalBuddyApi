@@ -22,6 +22,17 @@ builder.Services.AddScoped<ICarnivalService, CarnivalService>();
 
 builder.Services.AddScoped<ICarnivalRepository, CarnivalRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowViteFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -37,6 +48,8 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("AllowViteFrontend");
 
 app.MapControllers();
 
