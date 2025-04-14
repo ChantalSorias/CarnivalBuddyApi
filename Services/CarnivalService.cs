@@ -1,5 +1,6 @@
 using CarnivalBuddyApi.Models;
 using CarnivalBuddyApi.Repositories.Interfaces;
+using CarnivalBuddyApi.Services.Interfaces;
 
 namespace CarnivalBuddyApi.Services
 {

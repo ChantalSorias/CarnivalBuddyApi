@@ -1,7 +1,7 @@
 using AutoMapper;
 using CarnivalBuddyApi.Dtos;
 using CarnivalBuddyApi.Models;
-using CarnivalBuddyApi.Services;
+using CarnivalBuddyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarnivalBuddyApi.Controllers
@@ -70,7 +70,7 @@ namespace CarnivalBuddyApi.Controllers
             {
                 var carnival = _mapper.Map<Carnival>(carnivalDto);
                 var newCarnival = await _carnivalService.Create(carnival);
-                return CreatedAtAction(nameof(GetById), new { id = newCarnival.Id }, _mapper.Map<CarnivalDto>(newCarnival));
+                return CreatedAtAction(nameof(Create), new { id = newCarnival.Id }, _mapper.Map<CarnivalDto>(newCarnival));
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ namespace CarnivalBuddyApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting carnival with ID {Id}", id);
+                _logger.LogError(ex, $"Error deleting carnival with ID {id}");
                 return StatusCode(500, "An error occurred while deleting the carnival.");
             }
         }

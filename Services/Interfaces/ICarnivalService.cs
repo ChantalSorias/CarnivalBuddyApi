@@ -1,6 +1,6 @@
 using CarnivalBuddyApi.Models;
 
-namespace CarnivalBuddyApi.Services
+namespace CarnivalBuddyApi.Services.Interfaces
 {
     public interface ICarnivalService
     {

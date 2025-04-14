@@ -4,6 +4,7 @@ using CarnivalBuddyApi.Middleware;
 using CarnivalBuddyApi.Services;
 using CarnivalBuddyApi.Repositories.Interfaces;
 using CarnivalBuddyApi.Repositories;
+using CarnivalBuddyApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,10 @@ builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
 builder.Services.AddScoped<ICarnivalService, CarnivalService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<ICarnivalRepository, CarnivalRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddCors(options =>
 {
