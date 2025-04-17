@@ -58,6 +58,28 @@ namespace CarnivalBuddyApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("username/{username}")]
+        public async Task<ActionResult<User>> GetByUsername(string username)
+        {
+            try
+            {
+                var user = await _userService.GetByUsername(username);
+                if (user == null)
+                {
+                    return NotFound($"User (username: {username}) was not found.");
+                }
+
+                var userDto = _mapper.Map<UserDto>(user);
+                return Ok(userDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error fetching user by Username: {username}");
+                return StatusCode(500, "An error occurred while fetching the user.");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] UserDto userDto)
         {

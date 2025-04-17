@@ -32,6 +32,11 @@ namespace CarnivalBuddyApi.Repositories
             return await _usersCollection.Find(c => c.Email == email).FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetByUsername(string username)
+        {
+            return await _usersCollection.Find(c => c.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefaultAsync();
+        }
+
         public async Task<User> Create(User user)
         {
             await _usersCollection.InsertOneAsync(user);

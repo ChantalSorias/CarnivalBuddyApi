@@ -27,6 +27,10 @@ namespace CarnivalBuddyApi.Services
             return await _userRepository.GetByEmail(email);
         }
 
+        public async Task<User> GetByUsername(string username)
+        {
+            return await _userRepository.GetByUsername(username);
+        }
         public async Task<User> GetById(string id)
         {
             return await _userRepository.GetById(id);
@@ -46,5 +50,6 @@ namespace CarnivalBuddyApi.Services
         {
             await _userRepository.Delete(id);
         }
+
     }
 }
