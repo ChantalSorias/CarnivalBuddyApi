@@ -36,6 +36,11 @@ namespace CarnivalBuddyApi.Services
             return await _userRepository.GetById(id);
         }
 
+        public async Task<User> GetByGoogleId(string googleId)
+        {
+            return await _userRepository.GetByGoogleId(googleId);
+        }
+
         public async Task<User> Create(User user)
         {
             return await _userRepository.Create(user);

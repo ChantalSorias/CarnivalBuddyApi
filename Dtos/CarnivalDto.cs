@@ -5,6 +5,7 @@ namespace CarnivalBuddyApi.Dtos
     public class CarnivalDto
     {
         public string? Id { get; set; }
+        public required string GoogleId { get; set; }
         [Required]
         [StringLength(100)]
         public required string Title { get; set; }

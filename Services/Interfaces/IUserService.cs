@@ -10,6 +10,7 @@ namespace CarnivalBuddyApi.Services.Interfaces
     {
         public Task<List<User>> GetAll();
         public Task<User> GetById(string id);
+        public Task<User> GetByGoogleId(string googleId);
         public Task<User> GetByEmail(string email);
         public Task<User> GetByUsername(string username);
         public Task<User> Create(User user);

@@ -1,7 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using AutoMapper;
 using CarnivalBuddyApi.Dtos;
 using CarnivalBuddyApi.Models;
 using CarnivalBuddyApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarnivalBuddyApi.Controllers
@@ -13,12 +16,14 @@ namespace CarnivalBuddyApi.Controllers
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper)
+        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, ITokenService tokenService)
         {
             _userService = userService;
             _logger = logger;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpGet]
@@ -80,6 +85,36 @@ namespace CarnivalBuddyApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("google-login/{googleId}")]
+        public async Task<ActionResult<User>> GoogleLogin(string googleId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var existingUser = await _userService.GetByGoogleId(googleId);
+
+                if (existingUser == null)
+                {
+                    return NotFound($"User not found.");
+                }
+
+                var token = _tokenService.CreateToken(existingUser);
+                var existingUserDto = _mapper.Map<UserDto>(existingUser);
+
+                return Ok(new { token, user = existingUserDto });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating user.");
+                return StatusCode(500, "An error occurred while creating the user.");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] UserDto userDto)
         {
@@ -100,7 +135,10 @@ namespace CarnivalBuddyApi.Controllers
                 }
 
                 var newUser = await _userService.Create(user);
-                return CreatedAtAction(nameof(Create), new { id = newUser.Id }, _mapper.Map<UserDto>(newUser));
+                var token = _tokenService.CreateToken(newUser);
+                var newUserDto = _mapper.Map<UserDto>(newUser);
+                // return Ok(new { token, user = existingUserDto });
+                return CreatedAtAction(nameof(Create), new { id = newUser.Id }, new { token, user = newUserDto });
             }
             catch (Exception ex)
             {
@@ -109,10 +147,18 @@ namespace CarnivalBuddyApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult> Update(string id, [FromBody] UserDto userDto)
         {
+            var loggedInUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (loggedInUserId != id)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

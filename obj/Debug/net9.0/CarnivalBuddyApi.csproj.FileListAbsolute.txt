@@ -40,3 +40,11 @@
 /Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/obj/Debug/net9.0/CarnivalBuddyApi.pdb
 /Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/obj/Debug/net9.0/CarnivalBuddyApi.genruntimeconfig.cache
 /Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/obj/Debug/net9.0/ref/CarnivalBuddyApi.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/Users/chantal/source/repos/CarnivalBuddy/CarnivalBuddyApi/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

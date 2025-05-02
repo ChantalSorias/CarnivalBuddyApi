@@ -5,6 +5,9 @@ using CarnivalBuddyApi.Services;
 using CarnivalBuddyApi.Repositories.Interfaces;
 using CarnivalBuddyApi.Repositories;
 using CarnivalBuddyApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,26 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var key = builder.Configuration["Jwt:Key"];
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICarnivalService, CarnivalService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -49,10 +72,12 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowViteFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors("AllowViteFrontend");
 
 app.MapControllers();
 

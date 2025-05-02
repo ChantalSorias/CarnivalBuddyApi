@@ -27,6 +27,11 @@ namespace CarnivalBuddyApi.Repositories
             return await _usersCollection.Find(c => c.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetByGoogleId(string googleId)
+        {
+            return await _usersCollection.Find(c => c.GoogleId == googleId).FirstOrDefaultAsync();
+        }
+
         public async Task<User> GetByEmail(string email)
         {
             return await _usersCollection.Find(c => c.Email == email).FirstOrDefaultAsync();
