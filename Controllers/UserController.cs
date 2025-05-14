@@ -137,7 +137,7 @@ namespace CarnivalBuddyApi.Controllers
                 var newUser = await _userService.Create(user);
                 var token = _tokenService.CreateToken(newUser);
                 var newUserDto = _mapper.Map<UserDto>(newUser);
-                // return Ok(new { token, user = existingUserDto });
+
                 return CreatedAtAction(nameof(Create), new { id = newUser.Id }, new { token, user = newUserDto });
             }
             catch (Exception ex)

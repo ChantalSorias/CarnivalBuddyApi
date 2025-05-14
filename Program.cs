@@ -42,9 +42,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
 builder.Services.AddScoped<ICarnivalService, CarnivalService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 builder.Services.AddScoped<ICarnivalRepository, CarnivalRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 

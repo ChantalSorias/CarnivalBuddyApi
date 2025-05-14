@@ -1,33 +1,49 @@
+using System.Security.Claims;
 using AutoMapper;
 using CarnivalBuddyApi.Dtos;
 using CarnivalBuddyApi.Models;
 using CarnivalBuddyApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarnivalBuddyApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/carnivals")]
     public class CarnivalController : ControllerBase
     {
         private readonly ICarnivalService _carnivalService;
+        private readonly ILikeService _likeService;
         private readonly ILogger<CarnivalController> _logger;
         private readonly IMapper _mapper;
 
-        public CarnivalController(ICarnivalService carnivalService, ILogger<CarnivalController> logger, IMapper mapper)
+        public CarnivalController(ICarnivalService carnivalService, ILikeService likeService, ILogger<CarnivalController> logger, IMapper mapper)
         {
             _carnivalService = carnivalService;
+            _likeService = likeService;
             _logger = logger;
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<CarnivalDto>>> GetAll()
         {
             try
             {
                 var carnivals = await _carnivalService.GetAll();
-                return Ok(_mapper.Map<List<CarnivalDto>>(carnivals));
+                var carnivalDtos = _mapper.Map<List<CarnivalDto>>(carnivals);
+
+                var loggedInUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (loggedInUserId != null)
+                {
+                    var likedCarnivalIds = await _likeService.GetLikedEntityIds(loggedInUserId, LikedEntityType.Carnival);
+                    carnivalDtos.ForEach(c => c.Liked = likedCarnivalIds.Contains(c.Id!));
+                }
+
+                return Ok(carnivalDtos);
             }
             catch (Exception ex)
             {

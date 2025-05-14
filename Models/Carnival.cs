@@ -14,7 +14,8 @@ namespace CarnivalBuddyApi.Models
         public required string Location { get; set; }
         public required List<DateTime> ParadeDates { get; set; }
         public string? Image { get; set; }
-        public bool Liked { get; set; }
         public required List<Link> Links { get; set; }
+        [BsonIgnore]
+        public bool Liked { get; set; }
     }
 }

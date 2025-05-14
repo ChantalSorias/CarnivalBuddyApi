@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CarnivalBuddyApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a621dd4fd5adb8443846120ee4f89353e1ebc40b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bac8d2601d44694ce88da4d98ddd6b0c5fc4cf1b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CarnivalBuddyApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CarnivalBuddyApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
